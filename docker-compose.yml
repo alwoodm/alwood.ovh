@@ -4,8 +4,6 @@ networks:
   laravel_internal:
     driver: bridge
     internal: true
-  laravel_external:
-    driver: bridge
 
 services:
   # PHP Service
@@ -37,7 +35,6 @@ services:
       - ./docker/nginx/conf.d:/etc/nginx/conf.d
     networks:
       - laravel_internal
-      - laravel_external
 
   # MySQL Service
   db:

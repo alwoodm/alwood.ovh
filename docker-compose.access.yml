@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  access:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./docker/nginx-proxy.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - portfolio_laravel_internal
+      - access_external
+
+networks:
+  portfolio_laravel_internal:
+    external: true
+  access_external:
+    driver: bridge
