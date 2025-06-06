@@ -50,6 +50,9 @@ docker-compose exec app php artisan key:generate
 echo "Uruchamianie migracji bazy danych..."
 docker-compose exec app php artisan migrate:fresh
 
+echo "Uruchamianie seederów bazy danych..."
+docker-compose exec app php artisan db:seed
+
 echo "Czyszczenie cache..."
 docker-compose exec app php artisan optimize:clear
 
