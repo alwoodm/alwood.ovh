@@ -1,0 +1,69 @@
+version: '3'
+
+networks:
+  laravel_internal:
+    driver: bridge
+    internal: true
+  laravel_external:
+    driver: bridge
+
+services:
+  # PHP Service
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        user: laravel
+        uid: 1000
+    container_name: portfolio-app
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+      - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - laravel_internal
+
+  # Nginx Service
+  nginx:
+    image: nginx:alpine
+    container_name: portfolio-nginx
+    restart: unless-stopped
+    ports:
+      - "8000:80"
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d
+    networks:
+      - laravel_internal
+      - laravel_external
+
+  # MySQL Service
+  db:
+    image: mysql:8.0
+    container_name: portfolio-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE:-laravel}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-password}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-password}
+      MYSQL_USER: ${DB_USERNAME:-laravel}
+      SERVICE_NAME: mysql
+    volumes:
+      - dbdata:/var/lib/mysql
+      - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
+    networks:
+      - laravel_internal
+
+  # Redis Service
+  redis:
+    image: redis:alpine
+    container_name: portfolio-redis
+    restart: unless-stopped
+    networks:
+      - laravel_internal
+
+volumes:
+  dbdata:
+    driver: local
