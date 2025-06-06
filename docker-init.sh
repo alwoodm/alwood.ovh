@@ -29,14 +29,19 @@ fi
 
 # Budowanie i uruchamianie kontenerów
 echo "Budowanie i uruchamianie kontenerów Docker..."
-docker-compose up -d --build
+docker-compose down
+docker-compose build --no-cache
+docker-compose up -d
 
 # Czekanie aż kontenery będą gotowe
 echo "Czekanie na uruchomienie kontenerów..."
-sleep 5
+sleep 10
 
 # Instalacja zależności i konfiguracja Laravel
 echo "Instalacja zależności Composer..."
+docker-compose exec app composer install --ignore-platform-req=ext-intl
+
+echo "Ponowna instalacja zależności Composer po zainstalowaniu intl..."
 docker-compose exec app composer install
 
 echo "Generowanie klucza aplikacji..."
@@ -52,9 +57,11 @@ docker-compose exec app php artisan optimize:clear
 echo ""
 echo "=== Środowisko Docker zostało pomyślnie skonfigurowane ==="
 echo "Aplikacja dostępna pod adresem: http://localhost:8000"
+echo "Panel administracyjny: http://localhost:8000/admin"
 echo ""
-echo "Aby uruchomić kontener dostępowy (jeśli sieci są wewnętrzne):"
-echo "docker-compose -f docker-compose.access.yml up -d"
+echo "Dane logowania do panelu administracyjnego:"
+echo "Email: admin@alwood.ovh"
+echo "Hasło: password"
 echo ""
 echo "Przydatne komendy:"
 echo "- docker-compose exec app bash    # Wejście do kontenera PHP"

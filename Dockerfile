@@ -20,8 +20,12 @@ RUN apt-get update && apt-get install -y \
 # Czyszczenie cache apt-get
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
+# Instalacja zależności dla rozszerzenia intl
+RUN apt-get update && apt-get install -y \
+    libicu-dev
+
 # Instalacja rozszerzeń PHP
-RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip intl
 
 # Pobierz najnowszą wersję Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer

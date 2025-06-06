@@ -6,8 +6,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
@@ -44,5 +46,15 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+    
+    /**
+     * Określa, czy użytkownik może uzyskać dostęp do panelu Filament.
+     */
+    public function canAccessPanel(Panel $panel): bool
+    {
+        // Dopuszczamy każdego uwierzytelnionego użytkownika, ale można to ograniczyć
+        // np. tylko dla użytkownika admin@alwood.ovh lub dodać pole is_admin do modelu
+        return $this->email === 'admin@alwood.ovh';
     }
 }
