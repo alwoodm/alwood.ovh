@@ -435,7 +435,7 @@
                 
                 /* Animacja hamburger menu przy aktywacji */
                 .hamburger-menu.active .hamburger-line:nth-child(1) {
-                    transform: translateY(8px) rotate(45deg);
+                    transform: translateY(11px) rotate(45deg);
                 }
                 
                 .hamburger-menu.active .hamburger-line:nth-child(2) {
@@ -443,7 +443,7 @@
                 }
                 
                 .hamburger-menu.active .hamburger-line:nth-child(3) {
-                    transform: translateY(-10px) rotate(-45deg);
+                    transform: translateY(-11px) rotate(-45deg);
                 }
                 
                 /* Menu overlay */
