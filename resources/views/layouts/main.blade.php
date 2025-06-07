@@ -161,6 +161,18 @@
                 display: grid;
                 grid-template-columns: 1fr 1fr;
                 gap: var(--space-8);
+                align-items: start;
+            }
+            
+            /* Contact info styles */
+            .contact-info {
+                display: flex;
+                flex-direction: column;
+            }
+            
+            .contact-info-content {
+                position: sticky;
+                top: 100px;
             }
             
             .contact-info h2 {
@@ -178,6 +190,9 @@
             
             .contact-links {
                 margin-top: var(--space-6);
+                display: flex;
+                flex-direction: column;
+                gap: var(--space-3);
             }
             
             .contact-link {
@@ -186,8 +201,29 @@
                 gap: var(--space-2);
                 color: var(--primary-green);
                 text-decoration: none;
-                margin-bottom: var(--space-3);
                 font-family: var(--font-mono);
+                transition: transform var(--transition-normal);
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            
+            .contact-link:hover {
+                transform: translateY(-2px);
+            }
+            
+            .contact-link svg {
+                flex-shrink: 0;
+            }
+            
+            .contact-link-text {
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            
+            /* Contact form styles */
+            .contact-form-container {
+                width: 100%;
             }
             
             .contact-form {
@@ -196,14 +232,31 @@
                 padding: var(--space-6);
                 border: 1px solid var(--border-primary);
                 transition: border-color var(--transition-normal);
+                max-width: 100%;
             }
             
             .contact-form:hover {
                 border-color: var(--border-accent);
             }
             
+            .contact-form-elements {
+                display: flex;
+                flex-direction: column;
+                gap: var(--space-4);
+            }
+            
+            .form-row {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: var(--space-4);
+            }
+            
             .form-group {
-                margin-bottom: var(--space-4);
+                margin-bottom: 0;
+            }
+            
+            .form-submit {
+                margin-top: var(--space-2);
             }
             
             label {
@@ -227,6 +280,7 @@
             input:focus, textarea:focus {
                 outline: none;
                 border-color: var(--primary-green);
+                box-shadow: 0 0 0 2px rgba(53, 191, 92, 0.2);
             }
             
             textarea {
@@ -344,7 +398,98 @@
                 border-color: var(--border-accent);
             }
             
+            /* Hamburger Menu */
+            .hamburger-menu {
+                display: none;
+                flex-direction: column;
+                justify-content: space-between;
+                width: 30px;
+                height: 24px;
+                background: transparent;
+                border: none;
+                cursor: pointer;
+                padding: 0;
+                z-index: 200;
+            }
+            
+            .hamburger-line {
+                width: 100%;
+                height: 2px;
+                background-color: var(--text-primary);
+                transition: all var(--transition-normal);
+            }
+            
+            /* Responsywność - breakpoints */
+            @media (max-width: 1024px) {
+                .contact-grid {
+                    grid-template-columns: 1fr 1fr;
+                    gap: var(--space-6);
+                }
+            }
+            
             @media (max-width: 768px) {
+                /* Hamburger Menu - Mobile */
+                .hamburger-menu {
+                    display: flex;
+                }
+                
+                /* Animacja hamburger menu przy aktywacji */
+                .hamburger-menu.active .hamburger-line:nth-child(1) {
+                    transform: translateY(8px) rotate(45deg);
+                }
+                
+                .hamburger-menu.active .hamburger-line:nth-child(2) {
+                    opacity: 0;
+                }
+                
+                .hamburger-menu.active .hamburger-line:nth-child(3) {
+                    transform: translateY(-10px) rotate(-45deg);
+                }
+                
+                /* Menu overlay */
+                body.menu-open {
+                    overflow: hidden;
+                }
+                
+                body.menu-open::after {
+                    content: "";
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background: rgba(0, 0, 0, 0.5);
+                    z-index: 90;
+                    backdrop-filter: blur(2px);
+                }
+                
+                /* Nawigacja mobilna */
+                .nav {
+                    position: fixed;
+                    top: 0;
+                    right: -100%;
+                    width: 70%;
+                    height: 100vh;
+                    background-color: var(--bg-secondary);
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    gap: var(--space-6);
+                    transition: right var(--transition-normal);
+                    z-index: 100;
+                    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+                    border-left: 1px solid var(--border-primary);
+                }
+                
+                .nav.active {
+                    right: 0;
+                }
+                
+                .nav-link {
+                    font-size: var(--text-lg);
+                }
+                
+                /* Układy responsywne */
                 .contact-grid {
                     grid-template-columns: 1fr;
                 }
@@ -353,9 +498,24 @@
                     flex-direction: column;
                     text-align: center;
                 }
+            }
+            
+            @media (max-width: 576px) {
+                .contact-form {
+                    padding: var(--space-4);
+                }
                 
-                .nav {
-                    gap: var(--space-3);
+                .form-group {
+                    margin-bottom: var(--space-3);
+                }
+                
+                .btn {
+                    width: 100%;
+                    text-align: center;
+                }
+                
+                .contact-info h2 {
+                    font-size: var(--text-xl);
                 }
             }
         </style>
@@ -364,7 +524,15 @@
         <header class="header">
             <div class="container header-content">
                 <a href="/" class="logo" style="font-family: var(--font-mono); font-weight: var(--font-bold); text-decoration: none; color: var(--text-primary); font-size: var(--text-2xl);">{{ config('app.name') }}</a>
-                <nav class="nav">
+                
+                <!-- Hamburger Icon dla mobilnych urządzeń -->
+                <button class="hamburger-menu" aria-label="Menu">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+                
+                <nav class="nav" id="mobile-nav">
                     <a href="#kontakt" class="nav-link {{ request()->is('/') && !request()->is('admin*') ? 'active' : '' }}">Kontakt</a>
                     @auth
                         <a href="{{ url('/admin') }}" class="nav-link {{ request()->is('admin*') ? 'active' : '' }}">Admin</a>
