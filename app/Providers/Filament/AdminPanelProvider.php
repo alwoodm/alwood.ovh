@@ -29,7 +29,19 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => [
+                    50 => '#f0fdf4',
+                    100 => '#dcfce7',
+                    200 => '#bbf7d0',
+                    300 => '#86efac',
+                    400 => '#4CD964', // primary-green-light
+                    500 => '#35BF5C', // primary-green
+                    600 => '#2A9946', // primary-green-dark
+                    700 => '#15803d',
+                    800 => '#166534',
+                    900 => '#14532d',
+                    950 => '#052e16',
+                ],
             ])
             ->brandName('Portfolio Admin')
             ->favicon(asset('favicon.ico'))
