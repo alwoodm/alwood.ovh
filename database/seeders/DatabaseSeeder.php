@@ -16,6 +16,9 @@ class DatabaseSeeder extends Seeder
         // Uruchamiamy seeder administratora
         $this->call(AdminUserSeeder::class);
         
+        // Uruchamiamy seeder ustawień
+        $this->call(SettingsSeeder::class);
+        
         // User::factory(10)->create();
 
         // Tworzymy testowego użytkownika (opcjonalnie)

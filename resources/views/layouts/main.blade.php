@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="Portfolio osobiste - projekty, umiejętności i kontakt">
 
-        <title>@yield('title', 'alwood')</title>
+        <title>@yield('title', config('app.name'))</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -363,7 +363,7 @@
     <body>
         <header class="header">
             <div class="container header-content">
-                <a href="/" class="logo" style="font-family: var(--font-mono); font-weight: var(--font-bold); text-decoration: none; color: var(--text-primary); font-size: var(--text-2xl);">alwood</a>
+                <a href="/" class="logo" style="font-family: var(--font-mono); font-weight: var(--font-bold); text-decoration: none; color: var(--text-primary); font-size: var(--text-2xl);">{{ config('app.name') }}</a>
                 <nav class="nav">
                     <a href="#kontakt" class="nav-link {{ request()->is('/') && !request()->is('admin*') ? 'active' : '' }}">Kontakt</a>
                     @auth
@@ -382,7 +382,7 @@
         <footer class="footer">
             <div class="container footer-content">
                 <div class="footer-copyright">
-                    &copy; {{ date('Y') }} Made by alwood
+                    &copy; {{ date('Y') }} {{ config('settings.made_by_text', 'Made by') }} {{ config('app.name') }}
                 </div>
                 <div class="footer-links">
                     <a href="/" class="footer-link">Strona główna</a>
