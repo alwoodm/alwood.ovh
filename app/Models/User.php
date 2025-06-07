@@ -53,8 +53,8 @@ class User extends Authenticatable implements FilamentUser
      */
     public function canAccessPanel(Panel $panel): bool
     {
-        // Dopuszczamy każdego uwierzytelnionego użytkownika, ale można to ograniczyć
-        // np. tylko dla użytkownika admin@alwood.ovh lub dodać pole is_admin do modelu
-        return $this->email === 'admin@alwood.ovh';
+        // Dopuszczamy użytkownika z adresem email z seedera (admin@domain.example)
+        // lub z adresem admin@alwood.ovh dla kompatybilności
+        return $this->email === 'admin@domain.example' || $this->email === 'admin@alwood.ovh';
     }
 }

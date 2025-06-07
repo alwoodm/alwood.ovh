@@ -53,6 +53,12 @@ docker-compose exec app php artisan migrate:fresh
 echo "Uruchamianie seederów bazy danych..."
 docker-compose exec app php artisan db:seed
 
+echo "Instalowanie pakietów node..."
+docker-compose exec app npm install
+
+echo "Kompilacja zasobów frontendowych..."
+docker-compose exec app npm run build
+
 echo "Czyszczenie cache..."
 docker-compose exec app php artisan optimize:clear
 
