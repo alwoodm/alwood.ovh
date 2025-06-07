@@ -382,7 +382,7 @@
         <footer class="footer">
             <div class="container footer-content">
                 <div class="footer-copyright">
-                    &copy; {{ date('Y') }} {{ config('settings.made_by_text', 'Made by') }} {{ config('app.name') }}
+                    &copy; {{ date('Y') }} {{ config('settings.made_by_text', 'Made by') }}
                 </div>
                 <div class="footer-links">
                     <a href="/" class="footer-link">Strona główna</a>
