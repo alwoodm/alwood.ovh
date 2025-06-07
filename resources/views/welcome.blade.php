@@ -7,11 +7,5 @@
 @endsection
 
 @section('contact')
-    @include('components.contact-section')
+    @include('layouts.contact')
 @endsection
-
-@if (Route::has('login'))
-    <div class="h-14.5 hidden lg:block"></div>
-@endif
-</body>
-</html>
