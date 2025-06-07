@@ -28,8 +28,6 @@
 --border-accent: var(--primary-green);
 }
 
-text
-
 ### Typography System
 
 /* Font Stack */
@@ -50,8 +48,6 @@ text
 --font-medium: 500;
 --font-semibold: 600;
 --font-bold: 700;
-
-text
 
 ### Layout Patterns
 
@@ -75,8 +71,6 @@ text
 --radius-sm: 4px;
 --radius-md: 8px;
 --radius-lg: 12px;
-
-text
 
 ### Component Design Rules
 
@@ -104,8 +98,6 @@ color: var(--primary-green);
 border: 1px solid var(--primary-green);
 }
 
-text
-
 #### Cards
 
 .card {
@@ -119,8 +111,6 @@ transition: border-color 0.2s ease;
 .card:hover {
 border-color: var(--border-accent);
 }
-
-text
 
 #### Navigation
 
@@ -140,8 +130,6 @@ transition: color 0.2s ease;
 .nav-link.active {
 color: var(--primary-green);
 }
-
-text
 
 ### Design Principles
 
@@ -174,8 +162,6 @@ text
 --ease-out-cubic: cubic-bezier(0.33, 1, 0.68, 1);
 --ease-in-out-cubic: cubic-bezier(0.65, 0, 0.35, 1);
 
-text
-
 ### Responsive Breakpoints
 
 /* Mobile first approach */
@@ -183,8 +169,6 @@ text
 --bp-md: 768px;
 --bp-lg: 1024px;
 --bp-xl: 1280px;
-
-text
 
 ### Code Block Styling
 
@@ -198,8 +182,6 @@ font-family: var(--font-mono);
 color: var(--text-primary);
 overflow-x: auto;
 }
-
-text
 
 ### Usage Instructions
 1. Always use CSS custom properties for colors and spacing
