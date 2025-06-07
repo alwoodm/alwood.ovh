@@ -190,4 +190,4 @@ overflow-x: auto;
 4. Apply the Manjaro green (#35BF5C) sparingly as accent color
 5. Maintain dark theme as primary with light text
 6. Ensure all interactive elements have hover states
-7. Use subtle animations with the defined timing functions
+7. Use subtle animations with the defined timing functionsDobrze dodaj teraz 
