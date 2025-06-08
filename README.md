@@ -1,4 +1,4 @@
-# <span style="color: var(--primary-green);">ALWOOD.OVH</span> - Portfolio z panelem administracyjnym
+# <span style="color: var(--primary-green);">alwood.ovh</span> - Portfolio z panelem administracyjnym
 
 ![Status projektu](https://img.shields.io/badge/status-w%20rozwoju-brightgreen)
 ![PHP](https://img.shields.io/badge/PHP-8.2+-777BB4?style=for-the-badge&logo=php&logoColor=white)
