@@ -1,265 +1,449 @@
-# Instrukcje uruchomienia
+# <span style="color: var(--primary-green);">ALWOOD.OVH</span> - Portfolio z panelem administracyjnym
 
-Po wprowadzeniu zmian, wykonaj następujące kroki:
+![Status projektu](https://img.shields.io/badge/status-w%20rozwoju-brightgreen)
+![PHP](https://img.shields.io/badge/PHP-8.2+-777BB4?style=for-the-badge&logo=php&logoColor=white)
+![Laravel](https://img.shields.io/badge/Laravel-12.0-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
+![Filament](https://img.shields.io/badge/Filament-3.3-4299E1?style=for-the-badge&logo=laravel&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 
-1. Przeprowadź migrację bazy danych:
-```
-php artisan migrate
+Nowoczesne portfolio osobiste z systemem zarządzania treścią opartym na Laravel i Filament, z eleganckim ciemnym interfejsem inspirowanym kolorystyką jasnej zieleni.
+
+## 📑 Spis treści
+
+- [🌟 Funkcjonalności](#-funkcjonalności)
+- [📋 Wymagania](#-wymagania)
+- [🚀 Szybki start](#-szybki-start)
+- [🧰 Struktura projektu](#-struktura-projektu)
+- [🎨 System designu](#-system-designu)
+- [👥 Panel administracyjny](#-panel-administracyjny)
+- [🔧 Konfiguracja](#-konfiguracja)
+- [🐳 Docker](#-docker)
+- [🛠️ Rozwiązywanie problemów](#-rozwiązywanie-problemów)
+- [📝 Aktualizacje i konserwacja](#-aktualizacje-i-konserwacja)
+- [📚 Dokumentacja techniczna](#-dokumentacja-techniczna)
+
+## 🌟 Funkcjonalności
+
+- **Elegancki interfejs**
+  - Minimalistyczny design z ciemnym motywem
+  - Responsywny dla wszystkich urządzeń
+  - Zgodny z aktualnymi trendami UI/UX
+
+- **Portfolio i prezentacja**
+  - Sekcja projektów z galeriami zdjęć
+  - Prezentacja umiejętności i doświadczenia
+  - Interaktywny formularz kontaktowy
+
+- **System zarządzania treścią**
+  - Panel administracyjny oparty na Filament 3.3
+  - Zarządzanie projektami i zdjęciami
+  - System wiadomości kontaktowych
+  - Konfiguracja ustawień strony
+
+- **Technologie i optymalizacja**
+  - Pełna konteneryzacja (Docker)
+  - Baza danych SQLite (lub opcjonalnie MySQL)
+  - Optymalizacja SEO i wydajności
+
+## 📋 Wymagania
+
+- PHP 8.2 lub nowszy
+- Composer 2.x
+- Node.js 18+ i npm (dla kompilacji zasobów)
+- Docker i Docker Compose 2.0+ (opcjonalnie)
+- Baza danych SQLite (domyślnie) lub MySQL/PostgreSQL
+
+## 🚀 Szybki start
+
+### Instalacja z wykorzystaniem Docker (zalecana)
+
+```bash
+# Klonowanie repozytorium
+git clone https://github.com/username/alwood.ovh.git
+cd alwood.ovh
+
+# Uruchomienie skryptu inicjalizacyjnego
+./docker-init.sh
 ```
 
-2. Uruchom seeder ustawień:
-```
-php artisan db:seed --class=SettingsSeeder
+Po zakończeniu instalacji, aplikacja będzie dostępna pod adresem: http://localhost:8000
+
+Panel administracyjny: http://localhost:8000/admin
+
+### Instalacja manualna
+
+```bash
+# Klonowanie repozytorium
+git clone https://github.com/username/alwood.ovh.git
+cd alwood.ovh
+
+# Instalacja zależności
+composer install
+npm install
+
+# Konfiguracja
+cp .env.example .env
+touch database/database.sqlite
+php artisan key:generate
+
+# Migracja i seed bazy danych
+php artisan migrate --seed
+
+# Kompilacja zasobów
+npm run dev
+
+# Uruchomienie serwera
+php artisan serve
 ```
 
-3. Przebuduj cache autoload:
+## 🧰 Struktura projektu
+
+Projekt ma standardową strukturę Laravel z dodatkowymi katalogami dla Filament:
+
 ```
-composer dump-autoload
+alwood.ovh/
+├── app/                         # Kod źródłowy aplikacji
+│   ├── Filament/                # Komponenty panelu administracyjnego
+│   │   ├── Pages/               # Niestandardowe strony panelu
+│   │   ├── Resources/           # Zasoby Filament (CRUD)
+│   │   │   ├── MessageResource/ # Zarządzanie wiadomościami
+│   │   │   │   ├── Pages/       # Strony zasobu (lista, edycja)
+│   │   │   │   └── Widgets/     # Widgety zasobu (statystyki)
+│   │   │   │
+│   │   │   ├── PhotoResource/   # Zarządzanie zdjęciami
+│   │   │   │   ├── Pages/       # Strony zasobu (lista, edycja)
+│   │   │   │   └── RelationManagers/ # Relacje z innymi zasobami
+│   │   │   │
+│   │   │   └── SettingsResource/ # Zarządzanie ustawieniami
+│   │   │
+│   │   └── Widgets/            # Widgety dashboardu
+│   │
+│   ├── Http/                   # Kontrolery i middleware
+│   │   ├── Controllers/        # Kontrolery aplikacji
+│   │   │   └── ContactController.php # Obsługa formularza kontaktowego
+│   │   └── Middleware/         # Middleware aplikacji
+│   │
+│   ├── Models/                 # Modele danych
+│   │   ├── Message.php         # Model wiadomości kontaktowych
+│   │   ├── Photo.php           # Model zdjęć
+│   │   ├── Settings.php        # Model ustawień
+│   │   └── User.php            # Model użytkownika
+│   │
+│   └── Providers/              # Dostawcy usług
+│       └── Filament/           # Dostawca Filament
+│           └── AdminPanelProvider.php # Konfiguracja panelu admin
+│
+├── config/                     # Pliki konfiguracyjne
+├── database/                   # Migracje i seedery
+│   ├── factories/              # Fabryki testowe
+│   ├── migrations/             # Migracje bazy danych
+│   └── seeders/                # Seedery z danymi początkowymi
+│       ├── AdminUserSeeder.php # Seeder administratora
+│       └── SettingsSeeder.php  # Seeder ustawień
+│
+├── docker/                     # Konfiguracja kontenerów Docker
+├── public/                     # Zasoby publiczne
+├── resources/                  # Widoki, style i skrypty
+│   ├── css/                    # Style CSS
+│   │   └── app.css             # Główny plik CSS
+│   │
+│   ├── js/                     # Skrypty JavaScript
+│   │   ├── app.js              # Główny plik JavaScript
+│   │   └── bootstrap.js        # Inicjalizacja JavaScript
+│   │
+│   ├── lang/                   # Pliki językowe
+│   │   ├── en/                 # Angielskie tłumaczenia
+│   │   └── pl/                 # Polskie tłumaczenia
+│   │
+│   └── views/                  # Szablony Blade
+│       ├── components/         # Komponenty wielokrotnego użytku
+│       │   ├── contact/        # Komponenty sekcji kontaktowej
+│       │   │   ├── form.blade.php  # Formularz kontaktowy
+│       │   │   └── info.blade.php  # Informacje kontaktowe
+│       │   │
+│       │   └── ui/             # Komponenty interfejsu
+│       │       ├── button.blade.php # Przycisk
+│       │       └── card.blade.php  # Karta
+│       │
+│       ├── layouts/            # Szablony układów
+│       │   ├── main.blade.php  # Główny układ strony
+│       │   └── sections/       # Sekcje strony głównej
+│       │       └── contact.blade.php # Sekcja kontaktowa
+│       │
+│       └── welcome.blade.php   # Strona główna
+│
+├── routes/                     # Definicje tras
+│   └── web.php                # Trasy webowe
+│
+├── storage/                    # Pliki przechowywane
+│   └── app/                    # Pliki aplikacji
+│       └── public/             # Pliki publiczne
+│           └── photos/         # Przesłane zdjęcia
+│
+├── tests/                      # Testy aplikacji
+├── .env.example                # Przykładowy plik konfiguracyjny
+├── .github/                    # Pliki konfiguracyjne GitHub i Copilot
+├── composer.json               # Zależności PHP
+├── docker-compose.yml          # Konfiguracja Docker Compose
+├── docker-compose.access.yml   # Konfiguracja kontenera dostępowego
+├── Dockerfile                  # Instrukcje budowania obrazu Docker
+├── docker-init.sh              # Skrypt inicjalizacji Docker
+└── README.md                   # Dokumentacja projektu
 ```
 
-4. Wyczyść cache konfiguracji:
+## 🎨 System designu
+
+Projekt wykorzystuje autorski system designu oparty na filozofii minimalizmu i estetyce Manjaro Linux.
+
+### Paleta kolorów
+
+```css
+/* Primary Colors - Manjaro Green Theme */
+--primary-green: #35BF5C;
+--primary-green-dark: #2A9946;
+--primary-green-light: #4CD964;
+
+/* Background Colors */
+--bg-primary: #1a1a1a;
+--bg-secondary: #252525;
+--bg-tertiary: #2f2f2f;
+
+/* Text Colors */
+--text-primary: #e8e8e8;
+--text-secondary: #b3b3b3;
+--text-muted: #808080;
+
+/* Accent Colors */
+--accent-success: var(--primary-green);
+--accent-warning: #f39c12;
+--accent-error: #e74c3c;
+
+/* Border Colors */
+--border-primary: #404040;
+--border-accent: var(--primary-green);
 ```
+
+### Typografia
+
+- **Czcionki**: JetBrains Mono (kod i nagłówki) + Inter (tekst)
+- **Skala**: System modularnej skali typograficznej (od 0.75rem do 2rem)
+- **Hierarchia**: Wyraźne rozróżnienie nagłówków i tekstu poprzez rozmiar i wagę
+
+### Zasady projektowe
+
+- **Minimalizm** - ograniczone wykorzystanie kolorów, duża ilość przestrzeni
+- **Spójność** - konsekwentne wykorzystanie zmiennych CSS i skali odstępów
+- **Dostępność** - zachowanie minimalnego kontrastu 4.5:1
+- **Typografia** - czcionka monospace dla treści technicznych, sans-serif dla pozostałych
+
+### Komponenty interfejsu
+
+- **Przyciski** - `.btn-primary` i `.btn-secondary` z efektami hover
+- **Karty** - `.card` z subtelnymi efektami przy interakcji
+- **Nawigacja** - `.nav` z przejrzystym oznaczeniem aktywnych elementów
+- **Kod** - `.code-block` ze stylizowanym formatowaniem dla bloków kodu
+
+### Animacje
+
+Wszystkie animacje wykorzystują standardowe przejścia z czasami:
+- Szybkie: `0.15s ease`
+- Standardowe: `0.2s ease`
+- Wolne: `0.3s ease`
+- Preferowane funkcje przejścia: `ease-out-cubic` i `ease-in-out-cubic`
+
+## 👥 Panel administracyjny
+
+Panel administracyjny (Filament) zapewnia pełną kontrolę nad treścią strony.
+
+### Logowanie i dostęp
+
+Panel dostępny pod adresem `/admin` z domyślnymi danymi logowania:
+- Email: `admin@domain.example` lub `admin@alwood.ovh`
+- Hasło: `password`
+
+**Zalecamy natychmiast zmienić hasło po pierwszym logowaniu!**
+
+### Zarządzane zasoby
+
+#### 1. Wiadomości (Messages)
+- Przeglądanie wiadomości z formularza kontaktowego
+- Oznaczanie jako przeczytane/nieprzeczytane
+- Sortowanie i filtrowanie
+- Usuwanie lub archiwizowanie
+
+#### 2. Zdjęcia (Photos)
+- Przesyłanie zdjęć z automatycznym skalowaniem
+- Kategoryzacja i opisy
+- Przypisywanie do projektów
+- Zarządzanie galeriami
+
+#### 3. Ustawienia (Settings)
+- Linki do mediów społecznościowych (GitHub, LinkedIn)
+- Adres email kontaktowy
+- Konfiguracja stopki
+- Inne ustawienia strony
+
+### Dodanie konta administratora
+
+```bash
+# Za pomocą seedera
+php artisan db:seed --class=AdminUserSeeder
+
+# Lub ręcznie przez Tinker
+php artisan tinker
+>>> use App\Models\User;
+>>> use Illuminate\Support\Facades\Hash;
+>>> User::create([
+    'name' => 'Administrator',
+    'email' => 'twoj-email@example.com',
+    'password' => Hash::make('twoje-haslo'),
+]);
+```
+
+## 🔧 Konfiguracja
+
+### Zmienne środowiskowe
+
+Kluczowe zmienne w pliku `.env`:
+
+| Zmienna        | Opis                                   | Domyślna wartość     |
+|----------------|----------------------------------------|----------------------|
+| APP_NAME       | Nazwa aplikacji                        | alwood               |
+| APP_ENV        | Środowisko uruchomieniowe              | local                |
+| APP_DEBUG      | Tryb debugowania                       | true                 |
+| APP_URL        | URL aplikacji                          | http://localhost     |
+| ASSET_URL      | Bazowy URL dla zasobów                 | /                    |
+| DB_CONNECTION  | Typ połączenia z bazą danych           | sqlite               |
+| APP_LOCALE     | Język aplikacji                        | pl                   |
+| MAIL_MAILER    | Sterownik mailowy                      | log                  |
+
+### Funkcja pomocnicza settings()
+
+Aplikacja zawiera funkcję pomocniczą do pobierania ustawień:
+
+```php
+// Przykład użycia w widokach
+{{ settings('contact_email') }}
+{{ settings('github_url') }}
+{{ settings('linkedin_url') }}
+{{ settings('made_by_text') }}
+```
+
+## 🐳 Docker
+
+Projekt jest w pełni skonteneryzowany i gotowy do uruchomienia w środowisku Docker.
+
+### Architektura kontenerów
+
+- **app** - PHP-FPM 8.3 z zainstalowanym Laravel
+- **nginx** - Serwer WWW na porcie 8000
+- **db** - MySQL 8.0 z persistent volume
+- **redis** - Redis dla cache i kolejek
+
+### Sieci Docker
+
+- **laravel_internal** - Wewnętrzna sieć dla kontenerów aplikacji
+- **access_external** - Sieć dla kontenera proxy (opcjonalnie)
+
+### Kontener dostępowy (opcjonalnie)
+
+```bash
+docker-compose -f docker-compose.access.yml up -d
+```
+
+Aplikacja będzie wtedy dostępna na porcie 8080.
+
+### Zmienna ASSET_URL
+
+Zmienna `ASSET_URL=/` w plikach konfiguracyjnych określa ścieżkę bazową dla zasobów aplikacji. Ustawienie jej na `/` zapewnia poprawne ładowanie zasobów niezależnie od punktu wejścia, co jest szczególnie istotne przy pracy przez proxy.
+
+## 🛠️ Rozwiązywanie problemów
+
+### Problemy z logowaniem do panelu
+
+Jeśli nie możesz się zalogować do panelu administratora:
+
+1. Sprawdź czy posiadasz konto z właściwym adresem email
+2. Zweryfikuj czy adres email jest zgodny z warunkiem w metodzie `canAccessPanel`
+3. Zresetuj hasło jeśli to konieczne
+
+```bash
+# Sprawdź listę użytkowników
+php artisan tinker
+>>> App\Models\User::all()
+
+# Zmień hasło istniejącego użytkownika
+>>> $user = App\Models\User::where('email', 'admin@domain.example')->first();
+>>> $user->password = Hash::make('nowe-haslo');
+>>> $user->save();
+```
+
+### Czyszczenie cache po zmianach
+
+```bash
+# W środowisku Docker
+docker-compose exec app php artisan config:clear
+docker-compose exec app php artisan cache:clear
+
+# Bez Dockera
 php artisan config:clear
 php artisan cache:clear
 ```
 
-## Jak to działa
+## 📝 Aktualizacje i konserwacja
 
-### Panel Administracyjny
-- W panelu administracyjnym (`/admin`) znajduje się sekcja "Ustawienia", gdzie możesz edytować:
-  - Adres email kontaktowy
-  - Link do GitHub
-  - Link do LinkedIn
-  - Tekst "Made by" w stopce
+### Po aktualizacji funkcjonalności
 
-### Zmiany w widokach
-- W nagłówku i tytule strony zamiast hardkodowanego "alwood" używana jest wartość z `APP_NAME` z pliku `.env`
-- W stopce tekst "Made by" jest pobierany z ustawień
-- W sekcji kontaktowej linki do emaila, GitHub i LinkedIn są pobierane z bazy danych
+Po wprowadzeniu zmian w kodzie wykonaj:
 
-### Dodatkowe funkcje
-- Dodano pomocniczą funkcję `settings()`, którą możesz używać w widokach do pobierania wartości ustawień, np. `settings('contact_email')`
-
-# Docker dla Laravel Portfolio
-
-Ten dokument zawiera informacje na temat konfiguracji Docker dla projektu Laravel Portfolio.
-
-## Struktura projektu
-
-```
-portfolio/
-├── app/               # Kod aplikacji Laravel
-├── docker/            # Konfiguracje Docker
-│   ├── mysql/         # Konfiguracja MySQL
-│   ├── nginx/         # Konfiguracja Nginx
-│   ├── php/           # Konfiguracja PHP
-│   └── nginx-proxy.conf # Konfiguracja dla kontenera dostępowego
-├── Dockerfile         # Plik Dockerfile dla PHP
-├── docker-compose.yml # Podstawowa konfiguracja Docker Compose
-└── docker-compose.access.yml # Konfiguracja kontenera dostępowego
-```
-
-## Architektura Docker
-
-Projekt wykorzystuje następujące kontenery:
-
-1. **app** - Serwer PHP-FPM z Laravel
-2. **nginx** - Serwer WWW
-3. **db** - Baza danych MySQL
-4. **redis** - Serwer Redis dla cache i kolejek
-5. **access** - Kontener Nginx służący jako proxy do dostępu z zewnątrz (opcjonalnie)
-
-## Sieci Docker
-
-Projekt używa dwóch sieci:
-- **laravel_internal** - Sieć typu bridge dla komunikacji wewnętrznej między kontenerami
-- **access_external** - Sieć dla kontenera dostępowego (opcjonalnie)
-
-Konfiguracja jest elastyczna - domyślnie sieć `laravel_internal` nie jest wewnętrzna (nie ma flagi `internal: true`), co pozwala na dostęp do internetu z kontenerów. Jest to konieczne do pobierania zależności Composera. Jeśli wymagana jest większa izolacja, można ustawić `internal: true`, ale wtedy kontenery nie będą miały dostępu do internetu i trzeba będzie skorzystać z kontenera dostępowego.
-
-## Uruchomienie projektu
-
-Aby uruchomić projekt, wykonaj następujące kroki:
-
-1. Upewnij się, że masz zainstalowany Docker i Docker Compose (wymagana wersja co najmniej 2.0)
-
-### Metoda automatyczna (zalecana)
-
-Użyj przygotowanego skryptu inicjalizacyjnego:
-   ```
-   ./docker-init.sh
-   ```
-
-Skrypt ten automatycznie wykona wszystkie niezbędne kroki, w tym:
-- Kopiowanie pliku `.env.example` do `.env`
-- Tworzenie pliku bazy danych SQLite (jeśli to konfiguracja SQLite)
-- Budowanie i uruchamianie kontenerów
-- Instalację zależności Composer
-- Generowanie klucza aplikacji
-- Uruchomienie migracji bazy danych
-
-### Metoda manualna
-
-Wykonaj kolejno poniższe kroki:
-
-1. Skopiuj plik `.env.example` do `.env` i dostosuj ustawienia:
-   ```
-   cp .env.example .env
-   ```
-2. Zbuduj i uruchom kontenery:
-   ```
-   docker-compose up -d
-   ```
-3. Zainstaluj zależności Composer:
-   ```
-   docker-compose exec app composer install
-   ```
-4. Wygeneruj klucz aplikacji:
-   ```
-   docker-compose exec app php artisan key:generate
-   ```
-5. Wykonaj migracje bazy danych:
-   ```
-   docker-compose exec app php artisan migrate
-   ```
-
-## Dostęp do aplikacji
-
-W domyślnej konfiguracji aplikacja będzie dostępna pod adresem http://localhost:8000.
-
-Jeśli włączysz flagę `internal: true` dla sieci `laravel_internal` w `docker-compose.yml`, 
-aplikacja nie będzie dostępna bezpośrednio z hosta. 
-Aby uzyskać dostęp do aplikacji, będziesz musiał wtedy uruchomić dodatkowy kontener dostępowy.
-
-### Uruchamianie kontenera dostępowego
-
-Masz już przygotowany plik `docker-compose.access.yml` z następującą zawartością:
-
-```yaml
-version: '3'
-
-services:
-  access:
-    image: nginx:alpine
-    ports:
-      - "8080:80"
-    volumes:
-      - ./docker/nginx-proxy.conf:/etc/nginx/conf.d/default.conf
-    networks:
-      - portfolio_laravel_internal
-      - access_external
-
-networks:
-  portfolio_laravel_internal:
-    external: true
-  access_external:
-    driver: bridge
-```
-
-Ten kontener używa pliku konfiguracyjnego `docker/nginx-proxy.conf`:
-
-```nginx
-server {
-    listen 80;
-    
-    location / {
-        proxy_pass http://portfolio-nginx:80;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-    }
-}
-```
-
-Aby uruchomić ten kontener dostępowy:
-
-1. Najpierw upewnij się, że główne kontenery są uruchomione:
+1. Migracje bazy danych:
    ```bash
-   docker-compose up -d
+   php artisan migrate
    ```
 
-2. Następnie uruchom kontener dostępowy:
+2. Aktualizacja ustawień:
    ```bash
-   docker-compose -f docker-compose.access.yml up -d
+   php artisan db:seed --class=SettingsSeeder
    ```
 
-Aplikacja będzie wtedy dostępna pod adresem: http://localhost:8080
+3. Przebudowa autoloadera:
+   ```bash
+   composer dump-autoload
+   ```
 
-## Przydatne komendy
+4. Wyczyszczenie cache:
+   ```bash
+   php artisan config:clear
+   php artisan cache:clear
+   ```
 
-- Sprawdzenie logów:
-  ```
-  docker-compose logs -f
-  ```
-- Wejście do kontenera PHP:
-  ```
-  docker-compose exec app bash
-  ```
-- Zatrzymanie kontenerów:
-  ```
-  docker-compose down
-  ```
+5. Kompilacja zasobów:
+   ```bash
+   npm run dev
+   ```
 
-## Znaczenie zmiennej ASSET_URL=/
+## 📚 Dokumentacja techniczna
 
-Zmienna `ASSET_URL=/` w plikach `.env` i `.env.example` określa ścieżkę bazową dla zasobów
-aplikacji (CSS, JavaScript, obrazy itd.). Ustawienie jej na `/` sprawia, że wszystkie zasoby będą ładowane
-względem głównego katalogu serwera (root URL).
+### Modele danych
 
-Jest to szczególnie istotne przy pracy z Dockerem i proxy, aby upewnić się, że zasoby są poprawnie odnajdywane 
-niezależnie od tego, przez jaki punkt wejścia dostajemy się do aplikacji. Gdyby ta wartość nie była ustawiona,
-mogłyby wystąpić problemy z ładowaniem zasobów statycznych przy kierowaniu ruchu przez proxy.
+1. **User** - model użytkownika z rozszerzeniem FilamentUser
+2. **Message** - wiadomości z formularza kontaktowego
+3. **Photo** - zdjęcia z metadanymi
+4. **Settings** - ustawienia strony
 
-## Problemy z dostępem do internetu
+### Najważniejsze klasy
 
-Jeśli masz problemy z dostępem do internetu z kontenerów Docker, sprawdź dokument [README_DOCKER_NETWORK.md](./README_DOCKER_NETWORK.md), który zawiera szczegółowe informacje na temat konfiguracji sieci i rozwiązywania problemów z połączeniem.
+- **ContactController** - obsługa formularza kontaktowego
+- **AdminPanelProvider** - konfiguracja panelu Filament
+- **MessageResource** - zarządzanie wiadomościami w panelu
+- **PhotoResource** - zarządzanie zdjęciami w panelu
 
-## Konfiguracja sieci Docker i dostęp do internetu
+### Pomocne linki
 
-### Sieci w projekcie
+- [Dokumentacja Laravel](https://laravel.com/docs)
+- [Dokumentacja Filament](https://filamentphp.com/docs)
+- [Dokumentacja Docker Compose](https://docs.docker.com/compose/)
 
-Domyślnie w pliku `docker-compose.yml` sieć `laravel_internal` ma wyłączoną flagę `internal: true`:
+## 📋 Licencja
 
-```yaml
-networks:
-  laravel_internal:
-    driver: bridge
-    internal: false  # Domyślnie wyłączone dla dostępu do internetu
-```
-
-Dzięki temu kontenery mają dostęp do internetu, co jest konieczne do:
-- Pobierania zależności Composer
-- Aktualizacji pakietów npm
-- Dostępu do zewnętrznych API
-
-### Problemy z połączeniem internetowym
-
-Jeśli napotkasz problemy z pobieraniem zależności z internetu, upewnij się, że:
-
-1. Sieć Docker nie ma ustawionej flagi `internal: true`
-2. DNS działa poprawnie (sprawdź konfigurację `/etc/resolv.conf` w kontenerach)
-3. Firewall nie blokuje ruchu wychodzącego z kontenerów
-
-Typowy problem z DNS może wyglądać tak:
-```
-The following exception probably indicates you are offline or have misconfigured DNS resolver(s)
-In CurlDownloader.php line 390:
-curl error 6 while downloading https://api.github.com/: Could not resolve host: api.github.com
-```
-
-### Zmiana konfiguracji na sieć wewnętrzną
-
-Jeśli ze względów bezpieczeństwa potrzebujesz użyć sieci wewnętrznej (bez dostępu do internetu), zmień konfigurację w `docker-compose.yml`:
-
-```yaml
-networks:
-  laravel_internal:
-    driver: bridge
-    internal: true
-```
-
-Pamiętaj, że po tej zmianie:
-1. Musisz wcześniej zainstalować wszystkie zależności
-2. Kontenery nie będą miały dostępu do internetu
-3. Będziesz potrzebował kontenera dostępowego do komunikacji z aplikacją
+alwood 2025. Wszelkie prawa zastrzeżone
