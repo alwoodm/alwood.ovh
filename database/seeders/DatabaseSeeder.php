@@ -19,6 +19,9 @@ class DatabaseSeeder extends Seeder
         // Uruchamiamy seeder ustawień
         $this->call(SettingsSeeder::class);
         
+        // Uruchamiamy seeder ustawień dla sekcji hero
+        $this->call(HeroSettingsSeeder::class);
+        
         // User::factory(10)->create();
 
         // Tworzymy testowego użytkownika (opcjonalnie)

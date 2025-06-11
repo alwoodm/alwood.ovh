@@ -45,6 +45,8 @@ class SettingsResource extends Resource
                     ->label('Grupa')
                     ->options([
                         'contact' => 'Kontakt',
+                        'hero' => 'Sekcja Hero',
+                        'portfolio' => 'Portfolio',
                         'footer' => 'Stopka',
                         'general' => 'Ogólne',
                     ])
