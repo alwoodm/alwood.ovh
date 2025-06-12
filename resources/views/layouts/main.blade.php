@@ -276,6 +276,76 @@
                 left: 100%;
             }
             
+            /* About Section */
+            .about-section {
+                padding: var(--space-16) 0;
+                background-color: var(--bg-secondary);
+            }
+            
+            .about-content {
+                margin-top: var(--space-8);
+                display: grid;
+                gap: var(--space-8);
+            }
+            
+            .about-content.image-left {
+                grid-template-columns: minmax(300px, 1fr) 2fr;
+            }
+            
+            .about-content.image-right {
+                grid-template-columns: 2fr minmax(300px, 1fr);
+            }
+            
+            .about-content.no-image .about-text {
+                max-width: 800px;
+                margin: 0 auto;
+            }
+            
+            .about-image {
+                display: flex;
+                align-items: flex-start;
+                justify-content: center;
+            }
+            
+            .profile-image {
+                max-width: 100%;
+                height: auto;
+                border-radius: var(--radius-md);
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+                transition: transform var(--transition-normal);
+            }
+            
+            .profile-image:hover {
+                transform: scale(1.02);
+            }
+            
+            .about-text {
+                color: var(--text-primary);
+            }
+            
+            .about-text p {
+                margin-bottom: var(--space-4);
+                font-size: var(--text-lg);
+                line-height: 1.8;
+            }
+            
+            .about-text p:last-child {
+                margin-bottom: 0;
+            }
+            
+            .about-text a {
+                color: var(--primary-green);
+                text-decoration: none;
+                font-weight: var(--font-medium);
+                transition: all var(--transition-normal);
+                border-bottom: 1px dashed var(--primary-green);
+            }
+            
+            .about-text a:hover {
+                color: var(--primary-green-light);
+                border-bottom-style: solid;
+            }
+            
             /* Portfolio Section */
             .portfolio-section {
                 background-color: var(--bg-primary);
@@ -797,12 +867,9 @@
     </head>
     <body>
         <header class="header">
-            <div class="container header-content">
-                <a href="/" class="logo" style="font-family: var(--font-mono); font-weight: var(--font-bold); text-decoration: none; color: var(--text-primary); font-size: var(--text-2xl);">{{ config('app.name') }}</a>
-                
-                <!-- Hamburger Icon dla mobilnych urządzeń -->
-                <button class="hamburger-menu" aria-label="Menu">
-                    <span class="hamburger-line"></span>
+            <div class="container">
+                @include('components.header.nav')
+            </div>
                     <span class="hamburger-line"></span>
                     <span class="hamburger-line"></span>
                 </button>

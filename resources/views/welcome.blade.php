@@ -11,6 +11,8 @@
         'secondaryButtonText' => $heroSettings->secondary_button_text ?? 'Skontaktuj się',
         'secondaryButtonUrl' => $heroSettings->secondary_button_url ?? '#kontakt'
     ])
+    
+    @include('layouts.about')
 @endsection
 
 @section('contact')
