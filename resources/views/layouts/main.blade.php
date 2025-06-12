@@ -151,28 +151,49 @@
                 display: flex;
             }
             
+            .hamburger-menu {
+                display: none; /* Ukryj hamburger na desktopie */
+            }
+            
             .mobile-nav {
                 display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: var(--bg-primary);
-                border-bottom: 1px solid var(--border-primary);
-                padding: var(--space-4);
+                position: fixed;
+                top: 60px; /* Wysokość headera */
+                right: -100%;
+                width: 70%;
+                height: calc(100vh - 60px);
+                background-color: var(--bg-secondary);
                 flex-direction: column;
-                gap: var(--space-4);
-                transform: translateY(-10px);
-                opacity: 0;
-                visibility: hidden;
-                transition: all var(--transition-normal);
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+                align-items: center;
+                justify-content: flex-start;
+                padding-top: var(--space-12);
+                gap: var(--space-6);
+                transition: right var(--transition-normal);
+                z-index: 100;
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+                border-left: 1px solid var(--border-primary);
             }
             
             .mobile-nav.active {
-                transform: translateY(0);
-                opacity: 1;
-                visibility: visible;
+                right: 0;
+                display: flex;
+            }
+            
+            /* Overlay do mobile menu */
+            body.menu-open {
+                overflow: hidden;
+            }
+            
+            body.menu-open::after {
+                content: "";
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 90;
+                backdrop-filter: blur(2px);
             }
             
             .hamburger-menu {
@@ -418,9 +439,15 @@
                 font-family: var(--font-mono);
                 font-size: var(--text-2xl);
                 color: var(--text-primary);
-                margin-bottom: var(--space-4);
+                margin-bottom: var(--space-8);
                 position: relative;
                 display: inline-block;
+            }
+            
+            .about-title-container {
+                width: 100%;
+                text-align: center;
+                margin-bottom: var(--space-6);
             }
             
             .section-title::after {
@@ -431,9 +458,6 @@
                 width: 60px;
                 height: 3px;
                 background-color: var(--primary-green);
-            
-                padding: var(--space-16) 0;
-                background-color: var(--bg-secondary);
             }
             
             .about-content {
@@ -909,6 +933,15 @@
                     padding: var(--space-3) 0;
                 }
                 
+                /* Ukryj desktop nav i pokaż hamburger menu */
+                .desktop-nav {
+                    display: none;
+                }
+                
+                .hamburger-menu {
+                    display: flex;
+                }
+                
                 .hero-section {
                     padding: var(--space-8) 0 var(--space-6) 0;
                     min-height: calc(100vh - 60px);
@@ -972,13 +1005,17 @@
                     max-width: 80%;
                 }
                 
-                /* Hamburger Menu - Mobile */
-                .hamburger-menu {
-                    display: flex;
+                /* Centrowanie tytułu sekcji na urządzeniach mobilnych */
+                .section-title {
+                    display: block;
+                    text-align: center;
+                    margin-left: auto;
+                    margin-right: auto;
                 }
                 
-                .desktop-nav {
-                    display: none;
+                .section-title::after {
+                    left: 50%;
+                    transform: translateX(-50%);
                 }
                 
                 /* Animacja hamburger menu przy aktywacji */

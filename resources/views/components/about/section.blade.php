@@ -6,7 +6,9 @@
     @endif
     
     <div class="about-text">
-        <h2 class="section-title">{{ $title ?? 'O mnie' }}</h2>
+        <div class="about-title-container">
+            <h2 class="section-title">{{ $title ?? 'O mnie' }}</h2>
+        </div>
         {!! $content !!}
     </div>
 </div>
