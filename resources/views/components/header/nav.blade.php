@@ -27,3 +27,15 @@
         @endauth
     </nav>
 </div>
+
+<style>
+    @media (max-width: 768px) {
+        .desktop-nav {
+            display: none !important;
+        }
+        
+        .hamburger-menu {
+            display: flex !important;
+        }
+    }
+</style>

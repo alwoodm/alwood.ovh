@@ -127,6 +127,7 @@
                 justify-content: space-between;
                 align-items: center;
                 position: relative;
+                width: 100%;
             }
             
             .logo {
@@ -442,26 +443,30 @@
                 margin-bottom: var(--space-8);
                 position: relative;
                 display: inline-block;
+                text-align: center;
             }
             
             .about-title-container {
                 width: 100%;
                 text-align: center;
                 margin-bottom: var(--space-6);
+                display: flex;
+                justify-content: center;
             }
             
             .section-title::after {
                 content: '';
                 position: absolute;
                 bottom: -10px;
-                left: 0;
+                left: 50%;
+                transform: translateX(-50%);
                 width: 60px;
                 height: 3px;
                 background-color: var(--primary-green);
             }
             
             .about-content {
-                margin-top: var(--space-8);
+                margin-top: var(--space-4);
                 display: grid;
                 gap: var(--space-8);
             }
