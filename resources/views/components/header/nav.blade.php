@@ -2,14 +2,28 @@
     <div class="logo">
         <a href="/">{{ config('app.name') }}</a>
     </div>
-    <nav class="nav">
-        <a href="/" class="nav-link {{ request()->is('/') ? 'active' : '' }}">Strona główna</a>
-        <a href="#o-mnie" class="nav-link">O mnie</a>
-        <a href="#kontakt" class="nav-link">Kontakt</a>
+    
+    <nav class="nav desktop-nav">
+        <a href="/" class="nav-link" data-section="hero">Strona główna</a>
+        <a href="#about" class="nav-link" data-section="about">O mnie</a>
+        <a href="#kontakt" class="nav-link" data-section="kontakt">Kontakt</a>
+        @auth
+            <a href="{{ url('/admin') }}" class="nav-link {{ request()->is('admin*') ? 'active' : '' }}">Admin</a>
+        @endauth
     </nav>
-    <div class="hamburger-menu">
+    
+    <button class="hamburger-menu" aria-label="Menu">
         <span class="hamburger-line"></span>
         <span class="hamburger-line"></span>
         <span class="hamburger-line"></span>
-    </div>
+    </button>
+    
+    <nav class="nav mobile-nav" id="mobile-nav">
+        <a href="/" class="nav-link" data-section="hero">Strona główna</a>
+        <a href="#about" class="nav-link" data-section="about">O mnie</a>
+        <a href="#kontakt" class="nav-link" data-section="kontakt">Kontakt</a>
+        @auth
+            <a href="{{ url('/admin') }}" class="nav-link {{ request()->is('admin*') ? 'active' : '' }}">Admin</a>
+        @endauth
+    </nav>
 </div>

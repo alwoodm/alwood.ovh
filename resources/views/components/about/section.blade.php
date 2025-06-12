@@ -1,17 +1,12 @@
-<section id="o-mnie" class="about-section">
-    <div class="container">
-        <h2 class="section-title">{{ $title ?? 'O mnie' }}</h2>
-        
-        <div class="about-content {{ $showImage && $imagePosition === 'left' ? 'image-left' : ($showImage && $imagePosition === 'right' ? 'image-right' : 'no-image') }}">
-            @if($showImage && $imageUrl)
-            <div class="about-image">
-                <img src="{{ $imageUrl }}" alt="Zdjęcie profilowe" class="profile-image">
-            </div>
-            @endif
-            
-            <div class="about-text">
-                {!! $content !!}
-            </div>
-        </div>
+<div class="about-content {{ $showImage && $imagePosition === 'left' ? 'image-left' : ($showImage && $imagePosition === 'right' ? 'image-right' : 'no-image') }}">
+    @if($showImage && $imageUrl)
+    <div class="about-image">
+        <img src="{{ $imageUrl }}" alt="Zdjęcie profilowe" class="profile-image">
     </div>
-</section>
+    @endif
+    
+    <div class="about-text">
+        <h2 class="section-title">{{ $title ?? 'O mnie' }}</h2>
+        {!! $content !!}
+    </div>
+</div>
