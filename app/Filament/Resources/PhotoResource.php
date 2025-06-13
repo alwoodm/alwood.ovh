@@ -23,7 +23,7 @@ class PhotoResource extends Resource
     
     protected static ?string $navigationLabel = 'Zdjęcia';
     
-    protected static ?int $navigationSort = 100;
+    protected static ?int $navigationSort = 40;
 
     public static function form(Form $form): Form
     {
