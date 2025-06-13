@@ -23,6 +23,8 @@ class HeroSettingsResource extends Resource
     protected static ?string $modelLabel = 'Sekcja powitalna';
     
     protected static ?string $pluralModelLabel = 'Sekcja powitalna';
+    
+    protected static ?int $navigationSort = 10;
 
     public static function form(Form $form): Form
     {

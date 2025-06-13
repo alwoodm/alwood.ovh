@@ -19,11 +19,11 @@ class SettingsResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-cog';
     
-    protected static ?string $navigationGroup = 'Administracja';
+    protected static ?string $navigationGroup = 'Zawartość';
     
     protected static ?string $navigationLabel = 'Ustawienia';
     
-    protected static ?int $navigationSort = 200;
+    protected static ?int $navigationSort = 30;
 
     public static function form(Form $form): Form
     {

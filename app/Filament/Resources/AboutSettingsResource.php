@@ -21,9 +21,11 @@ class AboutSettingsResource extends Resource
     
     protected static ?string $navigationLabel = 'O mnie';
     
+    protected static ?string $navigationGroup = 'Zawartość';
+    
     protected static ?string $modelLabel = 'Ustawienia sekcji "O mnie"';
     
-    protected static ?int $navigationSort = 2;
+    protected static ?int $navigationSort = 20;
 
     public static function form(Form $form): Form
     {
