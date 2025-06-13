@@ -22,6 +22,19 @@ class AboutSettings extends Model
         'show_image' => 'boolean',
     ];
     
+    // 3. Akcesory i mutatory
+    public function getFormattedContentAttribute()
+    {
+        // Jeśli zawartość istnieje, przetwarzamy ją
+        if ($this->content) {
+            // RichEditor Filament używa HTML, więc już jest sformatowany
+            // Nie potrzebujemy dodatkowego parsowania, ale zapewniamy czystość HTML
+            return $this->content;
+        }
+        
+        return '<p>Brak treści.</p>';
+    }
+    
     // 5. Metody pomocnicze - alfabetycznie
     public function getImageUrl()
     {
