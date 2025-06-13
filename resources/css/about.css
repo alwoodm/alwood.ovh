@@ -1,0 +1,98 @@
+/* About section styles */
+.about-section {
+    padding: var(--space-12) 0;
+    background-color: var(--bg-primary);
+}
+
+.about-title-container {
+    width: 100%;
+    text-align: center;
+    margin-bottom: var(--space-6);
+    display: flex;
+    justify-content: center;
+}
+
+.section-title {
+    font-family: var(--font-mono);
+    font-size: var(--text-2xl);
+    color: var(--text-primary);
+    margin-bottom: var(--space-8);
+    position: relative;
+    display: inline-block;
+    text-align: center;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background-color: var(--primary-green);
+}
+
+.about-content {
+    display: grid;
+    gap: var(--space-8);
+    margin-top: var(--space-4);
+}
+
+.about-content.image-left {
+    grid-template-columns: minmax(300px, 1fr) 2fr;
+}
+
+.about-content.image-right {
+    grid-template-columns: 2fr minmax(300px, 1fr);
+}
+
+.about-content.no-image .about-text {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.about-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    transition: transform var(--transition-normal);
+}
+
+.profile-image:hover {
+    transform: translateY(-5px) scale(1.01);
+}
+
+.about-text {
+    font-size: var(--text-base);
+    color: var(--text-secondary);
+    line-height: 1.8;
+}
+
+.about-text p {
+    margin-bottom: var(--space-4);
+}
+
+/* Responsywność dla sekcji o mnie */
+@media (max-width: 768px) {
+    .about-content.image-left,
+    .about-content.image-right {
+        grid-template-columns: 1fr;
+    }
+    
+    .about-image {
+        margin-bottom: var(--space-4);
+        order: -1; /* Obrazek zawsze na górze na mobile */
+    }
+    
+    .profile-image {
+        max-width: 80%;
+    }
+}

@@ -498,35 +498,21 @@
                 transition: transform var(--transition-normal);
             }
             
-            .profile-image:hover {
-                transform: scale(1.02);
-            }
-            
-            .about-text {
-                color: var(--text-primary);
-            }
-            
-            .about-text p {
-                margin-bottom: var(--space-4);
-                font-size: var(--text-lg);
-                line-height: 1.8;
-            }
-            
-            .about-text p:last-child {
-                margin-bottom: 0;
-            }
-            
-            .about-text a {
-                color: var(--primary-green);
-                text-decoration: none;
-                font-weight: var(--font-medium);
-                transition: all var(--transition-normal);
-                border-bottom: 1px dashed var(--primary-green);
-            }
-            
-            .about-text a:hover {
-                color: var(--primary-green-light);
-                border-bottom-style: solid;
+            /* Responsywność dla sekcji o mnie */
+            @media (max-width: 768px) {
+                .about-content.image-left,
+                .about-content.image-right {
+                    grid-template-columns: 1fr;
+                }
+                
+                .about-image {
+                    margin-bottom: var(--space-4);
+                    order: -1; /* Obrazek zawsze na górze na mobile */
+                }
+                
+                .profile-image {
+                    max-width: 80%;
+                }
             }
             
             /* Portfolio Section */

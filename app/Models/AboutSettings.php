@@ -25,6 +25,18 @@ class AboutSettings extends Model
     // 5. Metody pomocnicze - alfabetycznie
     public function getImageUrl()
     {
-        return $this->image_path ? asset('storage/' . $this->image_path) : null;
+        if (!$this->image_path) {
+            return null;
+        }
+        
+        $path = 'storage/' . $this->image_path;
+        
+        // Sprawdzamy czy plik istnieje w publicznym storage
+        if (file_exists(public_path($path))) {
+            return asset($path);
+        }
+        
+        // Jeśli plik nie istnieje, zwracamy domyślny obrazek
+        return asset('images/default-profile.jpg');
     }
 }
