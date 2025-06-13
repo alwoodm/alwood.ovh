@@ -1,12 +1,52 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
+        @php
+            $seo = \App\Models\SeoSettings::getInstance();
+            $pageTitle = $seo->generateTitle($title ?? null);
+        @endphp
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="Portfolio osobiste - projekty, umiejętności i kontakt">
+        <meta name="description" content="{{ $seo->site_description }}">
+        @if($seo->site_keywords)
+        <meta name="keywords" content="{{ $seo->site_keywords }}">
+        @endif
 
-        <title>@yield('title', config('app.name'))</title>
+        <title>{{ $pageTitle }}</title>
+        
+        <!-- Favicon -->
+        <link rel="icon" href="{{ $seo->getFaviconUrl() }}" type="image/x-icon">
+        <link rel="shortcut icon" href="{{ $seo->getFaviconUrl() }}" type="image/x-icon">
+        
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="{{ url()->current() }}">
+        <meta property="og:title" content="{{ $pageTitle }}">
+        <meta property="og:description" content="{{ $seo->site_description }}">
+        @if($seo->getOgImageUrl())
+        <meta property="og:image" content="{{ $seo->getOgImageUrl() }}">
+        @endif
+        
+        <!-- Twitter -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:url" content="{{ url()->current() }}">
+        <meta name="twitter:title" content="{{ $pageTitle }}">
+        <meta name="twitter:description" content="{{ $seo->site_description }}">
+        @if($seo->getTwitterImageUrl())
+        <meta name="twitter:image" content="{{ $seo->getTwitterImageUrl() }}">
+        @endif
 
+        <!-- Google Analytics -->
+        @if($seo->google_analytics_id)
+        <script async src="https://www.googletagmanager.com/gtag/js?id={{ $seo->google_analytics_id }}"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '{{ $seo->google_analytics_id }}');
+        </script>
+        @endif
+        
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=jetbrains-mono:400,500,600,700|inter:400,500,600" rel="stylesheet" />

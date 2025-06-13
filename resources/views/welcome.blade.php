@@ -1,6 +1,9 @@
 @extends('layouts.main')
 
-@section('title', 'Strona główna')
+@php
+    // Ustaw tytuł strony (będzie użyty w meta tagach SEO)
+    $title = 'Strona główna';
+@endphp
 
 @section('content')
     @include('components.hero.section', [
