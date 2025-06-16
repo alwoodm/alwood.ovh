@@ -1,4 +1,5 @@
 import './bootstrap';
+import './project-modal';
 
 // Obsługa mobilnego menu hamburgerowego i scrollspy
 document.addEventListener('DOMContentLoaded', () => {

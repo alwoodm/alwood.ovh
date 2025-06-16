@@ -28,6 +28,9 @@ class DatabaseSeeder extends Seeder
         // Uruchamiamy seeder ustawień SEO
         $this->call(SeoSettingsSeeder::class);
         
+        // Uruchamiamy seeder przykładowych projektów
+        $this->call(ProjectSeeder::class);
+        
         // User::factory(10)->create();
 
         // Tworzymy testowego użytkownika (opcjonalnie)

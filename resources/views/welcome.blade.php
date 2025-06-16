@@ -16,6 +16,8 @@
     ])
     
     @include('layouts.about')
+    
+    @include('layouts.projects')
 @endsection
 
 @section('contact')

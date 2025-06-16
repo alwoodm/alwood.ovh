@@ -6,6 +6,7 @@
     <nav class="nav desktop-nav">
         <a href="/" class="nav-link" data-section="hero">Strona główna</a>
         <a href="#about" class="nav-link" data-section="about">O mnie</a>
+        <a href="#projects" class="nav-link" data-section="projects">Projekty</a>
         <a href="#kontakt" class="nav-link" data-section="kontakt">Kontakt</a>
         @auth
             <a href="{{ url('/admin') }}" class="nav-link {{ request()->is('admin*') ? 'active' : '' }}">Admin</a>
@@ -21,6 +22,7 @@
     <nav class="nav mobile-nav" id="mobile-nav">
         <a href="/" class="nav-link" data-section="hero">Strona główna</a>
         <a href="#about" class="nav-link" data-section="about">O mnie</a>
+        <a href="#projects" class="nav-link" data-section="projects">Projekty</a>
         <a href="#kontakt" class="nav-link" data-section="kontakt">Kontakt</a>
         @auth
             <a href="{{ url('/admin') }}" class="nav-link {{ request()->is('admin*') ? 'active' : '' }}">Admin</a>

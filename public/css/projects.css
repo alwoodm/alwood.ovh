@@ -1,0 +1,290 @@
+/* Sekcja projektów */
+.projects-section {
+    padding: var(--space-12) 0;
+    background-color: var(--bg-secondary);
+}
+
+.projects-title-container {
+    text-align: center;
+    margin-bottom: var(--space-8);
+}
+
+.section-title {
+    font-family: var(--font-mono);
+    font-size: var(--text-3xl);
+    font-weight: var(--font-bold);
+    color: var(--text-primary);
+    margin-bottom: var(--space-2);
+}
+
+.section-subtitle {
+    font-family: var(--font-sans);
+    font-size: var(--text-lg);
+    color: var(--text-secondary);
+    margin-bottom: var(--space-8);
+}
+
+.projects-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--space-6);
+    margin-bottom: var(--space-8);
+}
+
+/* Karty projektów */
+.project-card {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    transition: transform var(--transition-normal), border-color var(--transition-normal);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.project-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--border-accent);
+}
+
+.project-thumbnail {
+    position: relative;
+    overflow: hidden;
+    height: 180px;
+    background: var(--bg-secondary);
+}
+
+.project-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-slow);
+}
+
+.project-card:hover .project-thumbnail img {
+    transform: scale(1.05);
+}
+
+.featured-badge {
+    position: absolute;
+    top: var(--space-2);
+    right: var(--space-2);
+    background: var(--primary-green);
+    color: var(--bg-primary);
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: var(--font-medium);
+}
+
+.project-card-content {
+    padding: var(--space-4);
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.project-title {
+    font-family: var(--font-mono);
+    font-size: var(--text-xl);
+    font-weight: var(--font-bold);
+    color: var(--text-primary);
+    margin-bottom: var(--space-2);
+}
+
+.project-description {
+    color: var(--text-secondary);
+    font-size: var(--text-sm);
+    margin-bottom: var(--space-3);
+    flex-grow: 1;
+}
+
+.project-technologies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-bottom: var(--space-3);
+}
+
+.tech-badge {
+    background: rgba(53, 191, 92, 0.1);
+    color: var(--primary-green);
+    border: 1px solid var(--primary-green);
+    border-radius: var(--radius-sm);
+    padding: var(--space-1) var(--space-2);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+}
+
+.project-buttons {
+    margin-top: auto;
+}
+
+.view-project-details {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: var(--space-2);
+    cursor: pointer;
+}
+
+/* Modal projektu */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    display: none;
+}
+
+.modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(4px);
+}
+
+.modal-container {
+    position: relative;
+    max-width: 800px;
+    width: 90%;
+    max-height: 90vh;
+    margin: 5vh auto;
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-primary);
+    overflow-y: auto;
+    z-index: 1001;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-4);
+    border-bottom: 1px solid var(--border-primary);
+}
+
+.modal-header h3 {
+    font-family: var(--font-mono);
+    font-size: var(--text-2xl);
+    font-weight: var(--font-bold);
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.modal-close {
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-size: var(--text-2xl);
+    cursor: pointer;
+    padding: var(--space-1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color var(--transition-fast);
+}
+
+.modal-close:hover {
+    color: var(--primary-green);
+}
+
+.modal-content {
+    padding: var(--space-6);
+}
+
+.modal-image {
+    margin: 0 0 var(--space-6);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+}
+
+.modal-image img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-sm);
+}
+
+.modal-description {
+    color: var(--text-primary);
+    margin-bottom: var(--space-6);
+    line-height: 1.6;
+}
+
+.modal-description h3 {
+    font-family: var(--font-mono);
+    margin-top: var(--space-6);
+    margin-bottom: var(--space-3);
+    font-weight: var(--font-semibold);
+    color: var(--text-primary);
+}
+
+.modal-description ul {
+    padding-left: var(--space-6);
+    margin-bottom: var(--space-4);
+}
+
+.modal-description li {
+    margin-bottom: var(--space-2);
+}
+
+.modal-section {
+    margin-bottom: var(--space-6);
+}
+
+.modal-section h4 {
+    font-family: var(--font-mono);
+    font-size: var(--text-lg);
+    margin-bottom: var(--space-3);
+    color: var(--text-primary);
+}
+
+.modal-technologies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+}
+
+.modal-links {
+    display: flex;
+    gap: var(--space-4);
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.projects-more {
+    text-align: center;
+    margin-top: var(--space-8);
+}
+
+.btn-disabled {
+    display: inline-block;
+    padding: var(--space-3) var(--space-6);
+    background: var(--bg-tertiary);
+    color: var(--text-muted);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .projects-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .modal-links {
+        flex-direction: column;
+    }
+}
