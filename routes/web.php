@@ -10,6 +10,6 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 // Formularz kontaktowy obsługiwany na stronie głównej
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
-// Trasy dla projektów
-Route::get('/projekty', [ProjectController::class, 'index'])->name('projects.index');
+// Trasy dla projektów - tylko API
 Route::get('/projekty/dane/{slug}', [ProjectController::class, 'getProjectData'])->name('projects.data');
+Route::get('/api/projects/load-more', [ProjectController::class, 'loadMoreProjects'])->name('projects.load-more');

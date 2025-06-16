@@ -2,7 +2,7 @@
     <div class="container">
         @include('components.projects.section', [
             'title' => 'Moje projekty',
-            'subtitle' => 'Zobacz moje najciekawsze realizacje i projekty',
+            'subtitle' => 'Oto kolekcja moich najciekawszych realizacji - od projektów osobistych po komercyjne wdrożenia',
             'projects' => $featuredProjects,
             'showMoreLink' => true
         ])

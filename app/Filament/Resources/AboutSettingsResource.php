@@ -25,7 +25,7 @@ class AboutSettingsResource extends Resource
     
     protected static ?string $modelLabel = 'Ustawienia sekcji "O mnie"';
     
-    protected static ?int $navigationSort = 20;
+    protected static ?int $navigationSort = 15;
 
     public static function form(Form $form): Form
     {

@@ -50,6 +50,9 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=jetbrains-mono:400,500,600,700|inter:400,500,600" rel="stylesheet" />
+        
+        <!-- Projekty CSS -->
+        <link href="{{ asset('css/projects.css') }}" rel="stylesheet" />
 
         <!-- Styles / Scripts -->
         @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
@@ -1236,9 +1239,13 @@
                 </div>
                 <div class="footer-links">
                     <a href="/" class="footer-link">Strona główna</a>
+                    <a href="#projects" class="footer-link">Projekty</a>
                     <a href="#kontakt" class="footer-link">Kontakt</a>
                 </div>
             </div>
         </footer>
+    <!-- Scripts -->
+    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/project-modal.js'])
+    @stack('scripts')
     </body>
 </html>

@@ -88,6 +88,29 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    // Dodaj też obsługę dla innych linków z klasą scroll-to-section
+    document.querySelectorAll('.scroll-to-section').forEach(link => {
+        link.addEventListener('click', function(e) {
+            if (!this.getAttribute('href').startsWith('#')) {
+                return;
+            }
+            
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            
+            if (targetElement) {
+                const yOffset = -70; // Offset dla nagłówka
+                const y = targetElement.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                
+                window.scrollTo({
+                    top: y,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
     
     // Funkcja aktualizująca aktywne linki w obu menu
     function updateActiveNavLinks(sectionId) {
@@ -133,4 +156,46 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Wywołaj przy ładowaniu strony
     setTimeout(updateActiveLink, 200);
+
+    // Obsługa przycisku "Zobacz więcej projektów"
+    const loadMoreBtn = document.getElementById('load-more-projects');
+    if (loadMoreBtn) {
+        loadMoreBtn.addEventListener('click', async () => {
+            const btnText = loadMoreBtn.querySelector('.btn-text');
+            const btnLoader = loadMoreBtn.querySelector('.btn-loader');
+            const btnArrow = loadMoreBtn.querySelector('.btn-arrow');
+            
+            // Pokaż loader i ukryj tekst
+            btnText.style.display = 'none';
+            btnArrow.style.display = 'none';
+            btnLoader.style.display = 'flex';
+            loadMoreBtn.disabled = true;
+            
+            try {
+                const response = await fetch('/api/projects/load-more');
+                const data = await response.json();
+                
+                if (data.html) {
+                    // Dodaj nowe projekty do kontenera
+                    const additionalProjects = document.getElementById('additional-projects');
+                    additionalProjects.innerHTML = data.html;
+                    
+                    // Dodaj eventy do nowo załadowanych projektów
+                    if (typeof window.attachProjectEvents === 'function') {
+                        window.attachProjectEvents();
+                    }
+                    
+                    // Ukryj przycisk po załadowaniu
+                    loadMoreBtn.parentElement.style.display = 'none';
+                }
+            } catch (error) {
+                console.error('Błąd podczas ładowania projektów:', error);
+                // Przywróć przycisk w przypadku błędu
+                btnText.style.display = 'block';
+                btnArrow.style.display = 'block';
+                btnLoader.style.display = 'none';
+                loadMoreBtn.disabled = false;
+            }
+        });
+    }
 });

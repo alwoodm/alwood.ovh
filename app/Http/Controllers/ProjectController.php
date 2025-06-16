@@ -8,16 +8,44 @@ use App\Models\Project;
 class ProjectController extends Controller
 {
     /**
-     * Wyświetla listę projektów
+     * Wyświetla listę projektów (wszystkie na jednej stronie)
      */
     public function index()
     {
-        $projects = Project::orderBy('sort_order', 'asc')->get();
+        // Pobierz wszystkie projekty posortowane według kategorii i kolejności
+        $featuredProjects = Project::where('is_featured', true)
+            ->orderBy('sort_order', 'asc')
+            ->get();
+
+        $otherProjects = Project::where('is_featured', false)
+            ->orderBy('sort_order', 'asc')
+            ->get();
         
         return view('projects.index', [
-            'projects' => $projects,
-            'title' => 'Projekty',
-            'subtitle' => 'Lista zrealizowanych projektów'
+            'featuredProjects' => $featuredProjects,
+            'otherProjects' => $otherProjects,
+            'title' => 'Moje projekty',
+            'subtitle' => 'Moje projekty oraz te nad którymi pracowałem w ramach praktyk, zleceń, pracy zespołowej itd.'
+        ]);
+    }
+    
+    /**
+     * API endpoint do ładowania dodatkowych projektów
+     */
+    public function loadMoreProjects()
+    {
+        $otherProjects = Project::where('is_featured', false)
+            ->orderBy('sort_order', 'asc')
+            ->get();
+
+        $html = '';
+        foreach ($otherProjects as $project) {
+            $html .= view('components.projects.card', ['project' => $project])->render();
+        }
+
+        return response()->json([
+            'html' => $html,
+            'hasMore' => false // Już ładujemy wszystkie
         ]);
     }
     
@@ -35,6 +63,7 @@ class ProjectController extends Controller
             'demoUrl' => $project->demo_url,
             'codeUrl' => $project->code_url,
             'thumbnailUrl' => $project->thumbnail_url,
+            'category' => $project->category,
         ]);
     }
 }

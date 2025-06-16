@@ -15,7 +15,6 @@ class HomeController extends Controller
         $aboutSettings = AboutSettings::first();
         $featuredProjects = Project::where('is_featured', true)
             ->orderBy('sort_order', 'asc')
-            ->take(3)
             ->get();
         
         return view('welcome', compact('heroSettings', 'aboutSettings', 'featuredProjects'));

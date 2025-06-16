@@ -2,8 +2,24 @@
     @if($project->show_thumbnail && $project->thumbnail_url)
         <div class="project-thumbnail">
             <img src="{{ $project->thumbnail_url }}" alt="{{ $project->title }}">
-            @if($project->is_featured)
-                <span class="featured-badge">Wyróżniony</span>
+            @if($project->category)
+                <div class="project-badges">
+                    <span class="category-badge category-{{ $project->category }}">
+                        @switch($project->category)
+                            @case('osobiste')
+                                Osobisty
+                                @break
+                            @case('wspolpracowane')
+                                Współtworzone
+                                @break
+                            @case('komercyjne')
+                                Komercyjny
+                                @break
+                            @default
+                                {{ ucfirst($project->category) }}
+                        @endswitch
+                    </span>
+                </div>
             @endif
         </div>
     @endif
@@ -11,7 +27,7 @@
         <h3 class="project-title">{{ $project->title }}</h3>
         <p class="project-description">{{ $project->short_description }}</p>
         
-        @if($project->technologies && count($project->technologies) > 0)
+        @if($project->technologies && is_array($project->technologies) && count($project->technologies) > 0)
             <div class="project-technologies">
                 @foreach($project->technologies as $tech)
                     <span class="tech-badge">{{ $tech }}</span>

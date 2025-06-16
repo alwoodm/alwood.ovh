@@ -23,6 +23,7 @@ class Project extends Model
         'is_featured',
         'sort_order',
         'show_thumbnail',
+        'category',
     ];
     
     protected $casts = [
@@ -67,18 +68,11 @@ class Project extends Model
     public function getThumbnailUrlAttribute()
     {
         if (!$this->thumbnail_path) {
-            return asset('images/default-project.jpg');
+            return asset('images/default-project.svg');
         }
         
-        $path = 'storage/' . $this->thumbnail_path;
-        
-        // Sprawdzamy czy plik istnieje w publicznym storage
-        if (file_exists(public_path($path))) {
-            return asset($path);
-        }
-        
-        // Jeśli plik nie istnieje, zwracamy domyślny obrazek
-        return asset('images/default-project.jpg');
+        // Użyj Laravel Storage do generowania URL
+        return asset('storage/' . $this->thumbnail_path);
     }
     
     // 5. Metody pomocnicze - alfabetycznie

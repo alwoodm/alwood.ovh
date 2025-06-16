@@ -21,7 +21,7 @@ class ProjectResource extends Resource
     
     protected static ?string $navigationLabel = 'Projekty';
     
-    protected static ?int $navigationSort = 15;
+    protected static ?int $navigationSort = 20;
 
     public static function form(Form $form): Form
     {
@@ -74,6 +74,17 @@ class ProjectResource extends Resource
                             ->label('Technologie')
                             ->helperText('Technologie użyte w projekcie, np. Laravel, Filament, Tailwind')
                             ->separator(','),
+                            
+                        Forms\Components\Select::make('category')
+                            ->label('Kategoria projektu')
+                            ->options([
+                                'osobiste' => 'Osobiste',
+                                'wspolpracowane' => 'Współtworzone',
+                                'komercyjne' => 'Komercyjne',
+                            ])
+                            ->default('osobiste')
+                            ->required()
+                            ->helperText('Kategoria określa charakter projektu'),
                             
                     ]),
                     
@@ -160,6 +171,22 @@ class ProjectResource extends Resource
                 Tables\Columns\TextColumn::make('technologies')
                     ->label('Technologie')
                     ->badge(),
+                
+                Tables\Columns\TextColumn::make('category')
+                    ->label('Kategoria')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'osobiste' => 'primary',
+                        'wspolpracowane' => 'warning',
+                        'komercyjne' => 'success',
+                        default => 'gray',
+                    })
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                        'osobiste' => 'Osobiste',
+                        'wspolpracowane' => 'Współtworzone',
+                        'komercyjne' => 'Komercyjne',
+                        default => $state,
+                    }),
                     
                 // 3. Kolumny stanu/statusu
                 Tables\Columns\IconColumn::make('is_featured')
@@ -184,6 +211,13 @@ class ProjectResource extends Resource
             ->filters([
                 Tables\Filters\TernaryFilter::make('is_featured')
                     ->label('Tylko wyróżnione'),
+                Tables\Filters\SelectFilter::make('category')
+                    ->label('Kategoria')
+                    ->options([
+                        'osobiste' => 'Osobiste',
+                        'wspolpracowane' => 'Współtworzone',
+                        'komercyjne' => 'Komercyjne',
+                    ]),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
