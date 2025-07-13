@@ -59,7 +59,7 @@ Nowoczesne portfolio osobiste z systemem zarządzania treścią opartym na Larav
 
 ```bash
 # Klonowanie repozytorium
-git clone https://github.com/username/alwood.ovh.git
+git clone https://github.com/alwoodm/alwood.ovh.git
 cd alwood.ovh
 
 # Uruchomienie skryptu inicjalizacyjnego
@@ -74,7 +74,7 @@ Panel administracyjny: http://localhost:8000/admin
 
 ```bash
 # Klonowanie repozytorium
-git clone https://github.com/username/alwood.ovh.git
+git clone https://github.com/alwoodm/alwood.ovh.git
 cd alwood.ovh
 
 # Instalacja zależności
